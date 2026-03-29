@@ -153,7 +153,7 @@ class DirectCall:
 GRAMMAR = r"""
 start: stmt*
 
-?stmt: typed_assign | assign | expr_stmt
+?stmt: (typed_assign | assign | expr_stmt) ";"?
 
 typed_assign: NAME ":" TYPENAME "=" expr
 assign: NAME ":" expr

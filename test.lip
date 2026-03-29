@@ -1,0 +1,580 @@
+-- ============================================================
+-- Lip Language 测试用例集
+-- ============================================================
+
+-- ============================================================
+-- 1. 基础字面量
+-- ============================================================
+
+-- 整数
+42 -> print()
+-17 -> print()
+0 -> print()
+
+-- 浮点数
+3.14 -> print()
+-2.5 -> print()
+.5 -> print()
+
+-- 布尔值
+true -> print()
+false -> print()
+
+-- 字符串
+"hello world" -> print()
+"带有\n换行" -> print()
+"" -> print()
+
+-- Pending
+? -> print()
+
+-- ============================================================
+-- 2. 基础算术运算
+-- ============================================================
+
+10 -> add(5) -> print()           -- 15
+10 -> sub(3) -> print()           -- 7
+6 -> mul(7) -> print()            -- 42
+20 -> div(4) -> print()           -- 5.0
+17 -> mod(5) -> print()           -- 2
+2 -> pow(10) -> print()           -- 1024
+
+-- 一元运算
+-5 -> neg() -> print()            -- 5
+-8 -> abs() -> print()            -- 8
+
+-- 数学函数
+16 -> sqrt() -> print()           -- 4.0
+3.7 -> floor() -> print()         -- 3
+3.2 -> ceil() -> print()          -- 4
+3.567 -> round(2) -> print()      -- 3.57
+
+-- 链式运算
+10 -> add(5) -> mul(2) -> sub(10) -> print()  -- 20
+
+-- ============================================================
+-- 3. 比较运算
+-- ============================================================
+
+5 -> eq(5) -> print()             -- true
+5 -> eq(3) -> print()             -- false
+5 -> ne(3) -> print()             -- true
+5 -> lt(10) -> print()            -- true
+5 -> le(5) -> print()             -- true
+10 -> gt(5) -> print()            -- true
+10 -> ge(10) -> print()           -- true
+
+-- ============================================================
+-- 4. 逻辑运算
+-- ============================================================
+
+true -> and(true) -> print()      -- true
+true -> and(false) -> print()     -- false
+false -> or(true) -> print()      -- true
+false -> or(false) -> print()     -- false
+true -> not() -> print()          -- false
+false -> not() -> print()         -- true
+
+-- ============================================================
+-- 5. 类型检查与转换
+-- ============================================================
+
+-- is 类型检查
+42 -> is(Int) -> print()          -- true
+3.14 -> is(Float) -> print()      -- true
+true -> is(Bool) -> print()       -- true
+"hi" -> is(String) -> print()     -- true
+[1, 2] -> is(Table) -> print()    -- true
+{ x: x } -> is(Block) -> print()  -- true
+? -> is(Pending) -> print()       -- true
+
+-- type 获取类型
+42 -> type() -> print()           -- "Int"
+3.14 -> type() -> print()         -- "Float"
+"hi" -> type() -> print()         -- "String"
+
+-- as 类型转换
+"42" -> as(Int) -> print()        -- 42
+42 -> as(Float) -> print()        -- 42.0
+42 -> as(String) -> print()       -- "42"
+1 -> as(Bool) -> print()          -- true
+
+-- ============================================================
+-- 6. 字符串操作
+-- ============================================================
+
+"hello" -> upper() -> print()                   -- "HELLO"
+"HELLO" -> lower() -> print()                   -- "hello"
+"  hi  " -> trim() -> print()                   -- "hi"
+"a,b,c" -> split(",") -> print()                -- ["a", "b", "c"]
+["a", "b", "c"] -> join("-") -> print()         -- "a-b-c"
+"hello" -> concat(" ", "world") -> print()      -- "hello world"
+"hello" -> replace("l", "L") -> print()         -- "heLLo"
+"hello" -> starts_with("he") -> print()         -- true
+"hello" -> ends_with("lo") -> print()           -- true
+"hello" -> contains("ell") -> print()           -- true
+"hello" -> slice(1, 4) -> print()               -- "ell"
+"hello" -> length() -> print()                  -- 5
+"hello"[0] -> print()                           -- "h"
+
+-- ============================================================
+-- 7. Table 操作
+-- ============================================================
+
+-- 创建与访问
+nums: [1, 2, 3, 4, 5]
+nums -> print()
+nums[0] -> print()                -- 1
+nums[2] -> print()                -- 3
+
+-- 命名字段
+person: [name: "Alice", age: 30]
+person.name -> print()            -- "Alice"
+person.age -> print()             -- 30
+
+-- 混合
+mixed: [1, 2, 3, key: "value"]
+mixed[0] -> print()               -- 1
+mixed.key -> print()              -- "value"
+
+-- 基本操作
+[1, 2, 3] -> length() -> print()              -- 3
+[1, 2, 3] -> first() -> print()               -- 1
+[1, 2, 3] -> last() -> print()                -- 3
+[1, 2, 3] -> append(4) -> print()             -- [1, 2, 3, 4]
+[1, 2, 3] -> take(2) -> print()               -- [1, 2]
+[1, 2, 3] -> drop(1) -> print()               -- [2, 3]
+[3, 1, 2] -> sort() -> print()                -- [1, 2, 3]
+[1, 2, 3] -> reverse() -> print()             -- [3, 2, 1]
+
+-- has 检查
+[a: 1, b: 2] -> has("a") -> print()           -- true
+[a: 1, b: 2] -> has("c") -> print()           -- false
+[1, 2, 3] -> has(0) -> print()                -- true
+[1, 2, 3] -> has(5) -> print()                -- false
+
+-- get/set
+[1, 2, 3] -> get(1) -> print()                -- 2
+[1, 2, 3] -> set(1, 99) -> print()            -- [1, 99, 3]
+[a: 1] -> set("b", 2) -> print()              -- [a: 1, b: 2]
+
+-- keys/values
+[a: 1, b: 2, c: 3] -> keys() -> print()       -- ["a", "b", "c"]
+[a: 1, b: 2, c: 3] -> values() -> print()     -- [1, 2, 3]
+
+-- merge
+[1, 2] -> merge([3, 4]) -> print()            -- [1, 2, 3, 4]
+[a: 1] -> merge([b: 2]) -> print()            -- [a: 1, b: 2]
+
+-- flatten
+[[1, 2], [3, 4], [5]] -> flatten() -> print() -- [1, 2, 3, 4, 5]
+
+-- zip
+[1, 2, 3] -> zip(["a", "b", "c"]) -> print()  -- [[1, "a"], [2, "b"], [3, "c"]]
+
+-- 聚合
+[1, 2, 3, 4, 5] -> sum() -> print()           -- 15
+[1, 2, 3, 4, 5] -> avg() -> print()           -- 3.0
+[3, 1, 4, 1, 5] -> min() -> print()           -- 1
+[3, 1, 4, 1, 5] -> max() -> print()           -- 5
+
+-- remove
+[1, 2, 3] -> remove(1) -> print()             -- [1, 3]
+[a: 1, b: 2] -> remove("a") -> print()        -- [b: 2]
+
+-- range
+0 -> range(5) -> print()                      -- [0, 1, 2, 3, 4]
+1 -> range(10, step: 2) -> print()            -- [1, 3, 5, 7, 9]
+
+-- ============================================================
+-- 8. 高阶函数
+-- ============================================================
+
+-- map
+[1, 2, 3] -> map({ x: x -> mul(2) }) -> print()           -- [2, 4, 6]
+[1, 2, 3] -> map({ x: x -> pow(2) }) -> print()           -- [1, 4, 9]
+
+-- filter
+[1, 2, 3, 4, 5] -> filter({ x: x -> mod(2) -> eq(0) }) -> print()  -- [2, 4]
+[1, 2, 3, 4, 5] -> filter({ x: x -> gt(2) }) -> print()            -- [3, 4, 5]
+
+-- reduce
+[1, 2, 3, 4] -> reduce({ a, b: a -> add(b) }) -> print()           -- 10
+[1, 2, 3, 4] -> reduce({ a, b: a -> mul(b) }, init: 1) -> print()  -- 24
+
+-- each (副作用)
+[1, 2, 3] -> each({ x: x -> mul(10) -> print() })
+-- 输出: 10, 20, 30
+
+-- pairs (遍历命名字段)
+[a: 1, b: 2] -> pairs({ k, v: k -> concat(": ") -> concat(v) -> print() })
+-- 输出: a: 1, b: 2
+
+-- find
+[1, 2, 3, 4, 5] -> find({ x: x -> gt(3) }) -> print()     -- 4
+
+-- every
+[2, 4, 6] -> every({ x: x -> mod(2) -> eq(0) }) -> print() -- true
+[2, 3, 6] -> every({ x: x -> mod(2) -> eq(0) }) -> print() -- false
+
+-- some
+[1, 3, 4] -> some({ x: x -> mod(2) -> eq(0) }) -> print()  -- true
+[1, 3, 5] -> some({ x: x -> mod(2) -> eq(0) }) -> print()  -- false
+
+-- flatmap
+[[1, 2], [3, 4]] -> flatmap({ x: x -> map({ n: n -> mul(2) }) }) -> print()
+-- [2, 4, 6, 8]
+
+-- sort_by
+users: [
+    [name: "Charlie", age: 25],
+    [name: "Alice", age: 30],
+    [name: "Bob", age: 20]
+]
+users -> sort_by({ u: u.age }) -> print()
+-- 按年龄升序
+
+users -> sort_by({ u: u.age }, desc: true) -> print()
+-- 按年龄降序
+
+-- ============================================================
+-- 9. Block (闭包)
+-- ============================================================
+
+-- 基本 Block
+double: { x: x -> mul(2) }
+5 -> double() -> print()          -- 10
+
+-- 多参数
+add_three: { a, b, c: a -> add(b) -> add(c) }
+add_three(1, 2, 3) -> print()     -- 6
+
+-- 闭包捕获
+multiplier: 10
+scale: { x: x -> mul(multiplier) }
+5 -> scale() -> print()           -- 50
+
+-- 直接调用
+{ x: x -> pow(2) }(5) -> print()  -- 25
+
+-- run 调用
+{ : 42 } -> run() -> print()      -- 42
+
+-- ============================================================
+-- 10. 变量与赋值
+-- ============================================================
+
+-- 简单赋值
+x: 42
+x -> print()                      -- 42
+
+-- 类型注解
+y: Int = 100
+y -> print()                      -- 100
+
+-- 管道中捕获
+10 -> add(5) :> result -> mul(2) -> print()
+result -> print()                 -- 15
+
+-- 链式捕获
+1 -> add(1) :> a -> add(1) :> b -> add(1) :> c
+a -> print()  -- 2
+b -> print()  -- 3
+c -> print()  -- 4
+
+-- ============================================================
+-- 11. 三路分支 (核心特性)
+-- ============================================================
+
+-- 基础三路分支: [true分支, false分支, pending分支]
+true -> ["yes", "no", "unknown"] -> run() -> print()   -- "yes"
+false -> ["yes", "no", "unknown"] -> run() -> print()  -- "no"
+? -> ["yes", "no", "unknown"] -> run() -> print()      -- "unknown"
+
+-- Block 分支
+check: { val:
+    val -> [{
+        : "positive or true"
+    }, {
+        : "zero or false"
+    }, {
+        : "pending value"
+    }] -> run()
+}
+
+true -> check() -> print()    -- "positive or true"
+false -> check() -> print()   -- "zero or false"
+? -> check() -> print()       -- "pending value"
+
+-- 带参数的 Block 分支
+5 -> gt(0) -> [
+    { : "positive" },
+    { : "not positive" },
+    { : "unknown" }
+] -> run() -> print()         -- "positive"
+
+-- 整数索引分支
+2 -> ["zero", "one", "two", "three"] -> run() -> print()  -- "two"
+
+-- 复杂分支逻辑
+safe_div: { a, b:
+    b -> eq(0) -> [
+        { : ? },                    -- true: 除零返回 pending
+        { : a -> div(b) },          -- false: 正常除法
+        { : ? }                     -- pending: 保持 pending
+    ] -> run()
+}
+
+10 -> safe_div(2) -> print()      -- 5.0
+10 -> safe_div(0) -> print()      -- ?(literal pending value)
+10 -> safe_div(?) -> print()      -- ?(literal pending value)
+
+-- ============================================================
+-- 12. Pending 处理
+-- ============================================================
+
+-- Pending 传播
+? -> add(5) -> print()            -- ?(literal pending value) 延续
+
+-- recover 恢复默认值
+? -> recover(0) -> print()        -- 0
+? -> recover({ : 42 }) -> print() -- 42
+5 -> recover(0) -> print()        -- 5 (非 pending 不变)
+
+-- on_pending 回调 (用于日志/调试)
+? -> on_pending({ trace: trace.reason -> print() }) -> recover(0)
+-- 输出: literal pending value
+
+-- 检查是否为 pending
+? -> is(Pending) -> print()       -- true
+5 -> is(Pending) -> print()       -- false
+
+-- Pending 安全函数
+? -> not() -> print()             -- ?(pending)
+? -> is(Int) -> print()           -- false
+
+-- 运算中的 pending
+5 -> add(?) -> print()            -- ?(literal pending value)
+? -> eq(5) -> print()             -- ?(literal pending value)
+
+-- 三路逻辑: and/or 短路
+false -> and(?) -> print()        -- false (短路)
+true -> or(?) -> print()          -- true (短路)
+true -> and(?) -> print()         -- ?(pending)
+
+-- ============================================================
+-- 13. 方法调用语法
+-- ============================================================
+
+[1, 2, 3] -> length() -> print()                     -- 3
+[1, 2, 3] -> map({ x: x -> mul(2) }) -> print()      -- [2, 4, 6]
+"hello" -> upper() -> print()                        -- "HELLO"
+"a,b,c" -> split(",") -> print()                     -- ["a", "b", "c"]
+
+-- 链式方法
+[1, 2, 3, 4, 5]
+    -> filter({ x: x -> gt(2) })
+    -> map({ x: x -> mul(10) })
+    -> sum()
+    -> print()                                    -- 120
+
+-- 点属性访问
+[name: "Alice", age: 30].name -> print()          -- "Alice"
+"hello".length -> print()                         -- 5
+
+-- ============================================================
+-- 14. 复杂实际示例
+-- ============================================================
+
+-- 示例1: 数据处理管道
+data: [
+    [name: "Alice", score: 85],
+    [name: "Bob", score: 92],
+    [name: "Charlie", score: 78],
+    [name: "Diana", score: 95]
+]
+
+-- 找出分数大于80的人，按分数排序，取前2名
+data
+    -> filter({ s: s.score -> gt(80) })
+    -> sort_by({ s: s.score }, desc: true)
+    -> take(2)
+    -> map({ s: s.name })
+    -> print()
+-- ["Diana", "Alice"] 或 ["Diana", "Bob"]
+
+-- 示例2: 计算平均分
+data -> map({ s: s.score }) -> avg() -> print()   -- 87.5
+
+-- 示例3: 安全的数组访问
+safe_get: { arr, idx:
+    arr -> has(idx) -> [
+        { : arr -> get(idx) },
+        { : ? },
+        { : ? }
+    ] -> run()
+};
+
+[1, 2, 3] -> safe_get(1) -> print()   -- 2
+[1, 2, 3] -> safe_get(10) -> print()  -- ?
+
+-- 示例4: 字符串模板
+greet: { name, age:
+    "Hello, " -> concat(name) -> concat("! You are ") -> concat(age) -> concat(" years old.")
+}
+greet("Alice", 30) -> print()
+-- "Hello, Alice! You are 30 years old."
+
+-- 示例5: 递归式阶乘 (通过 reduce 实现)
+factorial: { n:
+    1 -> range(n -> add(1)) -> drop(1) -> reduce({ a, b: a -> mul(b) }, init: 1)
+}
+5 -> factorial() -> print()  -- 120
+
+-- 示例6: FizzBuzz
+fizzbuzz: { n:
+    n -> mod(15) -> eq(0) -> [
+        { : "FizzBuzz" },
+        { : n -> mod(3) -> eq(0) -> [
+            { : "Fizz" },
+            { : n -> mod(5) -> eq(0) -> [
+                { : "Buzz" },
+                { : n -> as(String) },
+                { : "?" }
+            ] -> run() },
+            { : "?" }
+        ] -> run() },
+        { : "?" }
+    ] -> run()
+}
+
+1 -> range(16) -> map({ n: n -> fizzbuzz() }) -> each({ x: x -> print() })
+
+-- 示例7: 管道捕获用于调试
+"hello world"
+    -> split(" ") :> words
+    -> map({ w: w -> upper() }) :> uppercased
+    -> join("-") :> result
+    -> print()
+
+words -> print()       -- ["hello", "world"]
+uppercased -> print()  -- ["HELLO", "WORLD"]
+result -> print()      -- "HELLO-WORLD"
+
+-- 示例8: 条件累加
+numbers: [1, -2, 3, -4, 5]
+positive_sum: numbers
+    -> filter({ x: x -> gt(0) })
+    -> sum()
+positive_sum -> print()  -- 9
+
+-- 示例9: 对象工厂
+make_counter: { start:
+    [
+        count: start,
+        inc: { self: self -> set("count", self.count -> add(1)) },
+        get: { self: self.count }
+    ]
+}
+counter: make_counter(0)
+counter.count -> print()  -- 0
+
+-- 示例10: 嵌套数据处理
+orders: [
+    [id: 1, items: [[name: "apple", qty: 2], [name: "banana", qty: 3]]],
+    [id: 2, items: [[name: "orange", qty: 1], [name: "apple", qty: 4]]]
+]
+
+-- 计算所有 apple 的总数量
+orders
+    -> flatmap({ o: o.items })
+    -> filter({ i: i.name -> eq("apple") })
+    -> map({ i: i.qty })
+    -> sum()
+    -> print()  -- 6
+
+-- ============================================================
+-- 15. 边界情况测试
+-- ============================================================
+
+-- 空 Table
+[] -> length() -> print()         -- 0
+[] -> first() -> print()          -- ?(empty table)
+[] -> sum() -> print()            -- 0
+
+-- 单元素
+[42] -> first() -> print()        -- 42
+[42] -> last() -> print()         -- 42
+[42] -> sum() -> print()          -- 42
+
+-- 负数索引 (不支持，返回 pending)
+[1, 2, 3][-1] -> print()          -- ?(index -1 out of range)
+
+-- 深层嵌套访问
+nested: [a: [b: [c: 42]]]
+nested.a.b.c -> print()           -- 42
+
+-- 类型混合 Table
+[1, "two", true, [nested: "value"]] -> print()
+
+-- 空字符串操作
+"" -> length() -> print()         -- 0
+"" -> upper() -> print()          -- ""
+"" -> split(",") -> print()       -- [""]
+
+-- 特殊数值
+0 -> div(0) -> print()            -- ?(division by zero)
+-1 -> sqrt() -> print()           -- ?(negative number)
+
+-- ============================================================
+-- 16. 方法链与管道混合
+-- ============================================================
+
+[1, 2, 3, 4, 5]
+    -> filter({ x: x -> mod(2) -> eq(1) })  -- 方法调用
+    -> map({ x: x -> pow(2) })            -- 管道调用
+    -> sum()                                 -- 方法调用
+    -> print()                             -- 管道调用
+-- 1 + 9 + 25 = 35
+
+-- ============================================================
+-- 17. 复杂 Pending 场景
+-- ============================================================
+
+-- Pending 在 Table 中
+[1, ?, 3] -> map({ x: x -> mul(2) }) -> print()
+-- [2, ?(literal pending value), 6]
+
+-- Pending 在条件中
+maybe_value: ?
+maybe_value -> gt(0) -> [
+    { : "positive" },
+    { : "not positive" },
+    { : "cannot determine" }
+] -> run() -> print()
+-- "cannot determine"
+
+-- 恢复链
+? -> add(1) -> recover(0) -> add(10) -> print()  -- 10
+
+-- ============================================================
+-- 18. 性能测试 (大数据)
+-- ============================================================
+
+-- 生成大列表
+big_list: 0 -> range(100)
+big_list -> length() -> print()   -- 100
+
+-- 链式处理
+big_list
+    -> filter({ x: x -> mod(2) -> eq(0) })
+    -> map({ x: x -> mul(x) })
+    -> take(10)
+    -> sum()
+    -> print()
+-- 0 + 4 + 16 + 36 + 64 + 100 + 144 + 196 + 256 + 324 = 1140
+
+-- ============================================================
+-- 完成!
+-- ============================================================
+"All tests completed!" -> print()
