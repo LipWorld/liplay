@@ -1,5 +1,6 @@
 # liplay
-这是一个不完整且不全遵循定义的`Lip`解释器 -- just for fun!
+
+**`Lip`核心特性解释器**
 
 ## 实现了的特性（核心特性）
 
@@ -19,29 +20,4 @@
 - Module/Import（模块系统）
 - 并发/Actor
 - 完整的 TCO
-
-## 示例代码
-
-```lip
--- 基本运算和管道
-10 -> add(5) -> mul(2) -> print()
-
--- Table 和 Block
-nums: [1, 2, 3, 4, 5]
-nums -> map({ x: x -> mul(x) }) -> print()
-
--- 三路分支 # 注意这里实现的次序
-true -> [{ : "false" }, { : "true" }, { : "pending" }] -> run() -> print()
-
--- Pending 处理
-10 -> div(0) -> recover({ : 0 }) -> print()
-
--- 中途捕获
-100 -> mul(2) :> doubled -> add(50) -> print()
-doubled -> print()
-
--- reduce 求和
-[1, 2, 3, 4, 5] -> reduce({ acc, x: acc -> add(x) }, init: 0) -> print()
-```
-
-这个实现涵盖了 Lip 语言的核心特性，包括三元逻辑、管道、Table、Block 和 Pending 状态处理。
+- 其他语言接口
